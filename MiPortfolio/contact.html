@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto | Jacobo León</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>CONTACTO</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">INICIO</a></li>
+                    <li><a href="about.html">SOBRE MÍ</a></li>
+                    <li><a href="contact.html" class="active">CONTACTO</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="contact-section">
+        <div class="container">
+            <h2 class="section-title">HABLEMOS DE TU IDEA</h2>
+            <p style="max-width: 600px; margin: 0 auto 50px; font-size: 1.2rem; text-align: center;">
+                Si estás listo para empezar un proyecto con diseño diferencial y código limpio, envíame un mensaje directo.
+            </p>
+
+            <form class="contact-form">
+                <div class="form-group">
+                    <label for="nombre">NOMBRE</label>
+                    <input type="text" id="nombre" name="nombre" required placeholder="Tu nombre">
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">CORREO ELECTRÓNICO</label>
+                    <input type="email" id="email" name="email" required placeholder="email@ejemplo.com">
+                </div>
+                
+                <div class="form-group">
+                    <label for="asunto">ASUNTO</label>
+                    <input type="text" id="asunto" name="asunto" placeholder="Ej: Nueva Colaboración">
+                </div>
+
+                <div class="form-group">
+                    <label for="mensaje">CUÉNTAME TU IDEA</label>
+                    <textarea id="mensaje" name="mensaje" required placeholder="Describe brevemente el proyecto, el reto o la pregunta..."></textarea>
+                </div>
+                
+                <button type="submit" class="btn">ENVIAR MENSAJE &rarr;</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 JACOBO LEÓN | Todos los derechos reservados</p>
+        </div>
+    </footer>
+</body>
+</html>

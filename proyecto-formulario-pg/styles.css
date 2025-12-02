@@ -1,0 +1,136 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* CUERPO DE LA PÁGINA */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* CONTENEDOR DEL FORMULARIO */
+.contenedor {
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    max-width: 500px;
+    width: 100%;
+}
+
+/* TÍTULO */
+.contenedor h1 {
+    text-align: center;
+    color: #333333;
+    margin-bottom: 30px;
+    font-size: 28px;
+}
+
+/* GRUPOS DE CAMPOS (LABEL + INPUT/TEXTAREA) */
+.grupo-formulario {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ETIQUETAS */
+.grupo-formulario label {
+    font-weight: 600;
+    color: #555555;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+/* CAMPOS DE TEXTO Y TEXTAREA */
+.grupo-formulario input[type="text"],
+.grupo-formulario input[type="email"],
+.grupo-formulario input[type="tel"],
+.grupo-formulario textarea {
+    padding: 12px 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 5px;
+    font-size: 14px;
+    font-family: inherit;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+/* EFECTO FOCUS EN CAMPOS */
+.grupo-formulario input[type="text"]:focus,
+.grupo-formulario input[type="email"]:focus,
+.grupo-formulario input[type="tel"]:focus,
+.grupo-formulario textarea:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+}
+
+/* TEXTAREA */
+.grupo-formulario textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* TEXTO CAMPOS REQUERIDOS */
+.campo-requerido {
+    color: #e74c3c;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+/* CONTENEDOR DE BOTONES */
+.botones {
+    display: flex;
+    gap: 10px;
+    margin-top: 30px;
+}
+
+/* BOTONES GENERALES */
+.botones button {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+/* BOTÓN ENVIAR */
+.btn-enviar {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #ffffff;
+}
+
+.btn-enviar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+/* BOTÓN LIMPIAR */
+.btn-limpiar {
+    background: #ecf0f1;
+    color: #333333;
+}
+
+.btn-limpiar:hover {
+    background: #bdc3c7;
+}
+
+/* RESPONSIVE BÁSICO */
+@media (max-width: 480px) {
+    .contenedor {
+        padding: 25px;
+    }
+
+    .contenedor h1 {
+        font-size: 22px;
+    }
+}
