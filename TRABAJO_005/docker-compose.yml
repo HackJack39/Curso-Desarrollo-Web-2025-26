@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  # Contenedor de Apache + PHP 8.2 (Construido con Dockerfile)
+  web:
+    build: . # Busca el Dockerfile en el directorio actual
+    container_name: php-apache-dev
+    ports:
+      - "8080:80"
+    volumes:
+      - ./app:/var/www/html
+      - ./CSS:/var/www/html/CSS
+      - ./config/apache.conf:/etc/apache2/sites-available/000-default.conf
+    # Dependencia corregida: Esperar a que la DB esté lista (healthy)
+    depends_on:
+      db:
+        condition: service_healthy 
+    networks:
+      - dev-network
+
+  # Contenedor de PostgreSQL 16 (Healthcheck corregido)
+  db:
+    image: postgres:16-alpine
+    container_name: postgres-dev
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: 123456789
+      POSTGRES_DB: formulario_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-db:/docker-entrypoint-initdb.d
+    networks:
+      - dev-network
+    healthcheck:
+      # CORRECCIÓN: Usa el usuario (-U) y la base de datos (-d) correctos
+      test: ["CMD-SHELL", "pg_isready -U admin -d formulario_db"] 
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
+
+networks:
+  dev-network:
+    driver: bridge
