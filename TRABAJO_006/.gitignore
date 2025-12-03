@@ -1,0 +1,60 @@
+############################
+# 1. ARCHIVOS DE CREDENCIALES
+############################
+
+# Archivo de variables de entorno (¡NUNCA deben ir a Git!)
+.env
+.env.local
+.env.*.local
+
+############################
+# 2. ARCHIVOS DE DOCKER Y DATOS
+############################
+
+# Archivos de caché de Docker
+.dockerignore
+.docker/
+*.log
+*.tmp
+
+# DIRECTORIOS DE VOLÚMENES Y DATOS (¡MÁXIMA PRIORIDAD!)
+# Ignora cualquier carpeta que uses para montar volúmenes persistentes
+# o donde se guarden los datos de tu base de datos.
+
+# Ejemplo genérico de volumen de datos:
+/data/
+/db/
+/mysql/
+/postgres/
+
+# Si usas SQLite:
+*.sqlite
+*.sqlite3
+*.db
+/database.db
+
+############################
+# 3. DEPENDENCIAS Y COMPILACIÓN WEB (Si aplica)
+############################
+
+# Dependencias de Node.js (común en web)
+node_modules/
+
+# Carpetas de compilación
+/dist/
+/build/
+/out/
+
+############################
+# 4. ARCHIVOS DE IDE Y SISTEMA OPERATIVO
+############################
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+Desktop.ini

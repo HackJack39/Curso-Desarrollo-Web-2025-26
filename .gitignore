@@ -1,3 +1,9 @@
 TRABAJO_005/postgres_data/
 TRABAJO_005/.env
 TRABAJO_005/vendor
+vendor/
+node_modules/
+*.env
+/TRABAJO_006/db_data/
+.DS_Store
+.vscode/
