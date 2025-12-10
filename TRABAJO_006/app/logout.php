@@ -1,30 +1,13 @@
 <?php
-/**
- * Archivo: logout.php
- * Cierra la sesión del usuario
- */
-
-// 1. Iniciar la sesión
+// Destructor de sesión para cerrar sesión del usuario
 session_start();
 
-// 2. Destruir todas las variables de sesión
-// Desestablece todas las variables de sesión
-$_SESSION = array();
-
-// Si se desea destruir la sesión completamente, borre también la cookie de sesión.
-// Nota: ¡Esto destruirá la sesión, y no solo los datos de la sesión!
-if (ini_get("session.use_cookies")) {
-    $params = session_get_cookie_params();
-    setcookie(session_name(), '', time() - 42000,
-        $params["path"], $params["domain"],
-        $params["secure"], $params["httponly"]
-    );
-}
-
-// Finalmente, destruir la sesión
+// Vaciamos datos y destruimos la sesión
+$_SESSION = [];
 session_destroy();
 
-// 3. Redirigir al usuario a la página de inicio de sesión
-header('Location: login.php');
+// Re-iniciamos la sesión rápidamente para pasar un mensaje de éxito
+session_start();
+$_SESSION['success'] = 'Has cerrado sesión correctamente.';
+header('Location: index.php');
 exit;
-?>

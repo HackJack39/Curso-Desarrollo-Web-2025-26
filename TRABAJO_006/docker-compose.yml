@@ -1,41 +1,48 @@
-version: '3.8'
+
 
 services:
-  # Contenedor de Apache + PHP 8.2 (Construido con Dockerfile)
   web:
-    build: . # Busca el Dockerfile en el directorio actual
+    image: php:8.2-apache
     container_name: php-apache-dev
     ports:
       - "8080:80"
     volumes:
       - ./app:/var/www/html
-      - ./CSS:/var/www/html/CSS
       - ./config/apache.conf:/etc/apache2/sites-available/000-default.conf
-    # Dependencia corregida: Esperar a que la DB esté lista (healthy)
+    environment:
+      - APACHE_DOCUMENT_ROOT=/var/www/html
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
     depends_on:
-      db:
-        condition: service_healthy 
+      - formulario_db
     networks:
       - dev-network
+    command: >
+      sh -c "apt-get update &&
+      apt-get install -y libpq-dev &&
+      docker-php-ext-install pdo pdo_pgsql &&
+      apache2-foreground"
 
-  # Contenedor de PostgreSQL 16 (Healthcheck corregido)
-  db:
+  formulario_db:
     image: postgres:16-alpine
     container_name: postgres-dev
+    hostname: formulario_db
     environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: 123456789
-      POSTGRES_DB: formulario_db
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_DB: ${DB_NAME}
     ports:
-      - "5433:5432"
+      - "5434:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./init-db:/docker-entrypoint-initdb.d
     networks:
       - dev-network
     healthcheck:
-      # CORRECCIÓN: Usa el usuario (-U) y la base de datos (-d) correctos
-      test: ["CMD-SHELL", "pg_isready -U admin -d formulario_db"] 
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER}"]
       interval: 10s
       timeout: 5s
       retries: 5

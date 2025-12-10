@@ -17,28 +17,6 @@ CREATE TABLE IF NOT EXISTS cursos (
     fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- ----------------------------------------------------
--- TABLAS PARA TRABAJO_006: ACCESO Y LOGS
--- ----------------------------------------------------
-
--- 1. Tabla para el registro de usuarios del panel de acceso (Autenticación - Tabla 'users')
-CREATE TABLE IF NOT EXISTS users (
-    id SERIAL PRIMARY KEY,
-    username VARCHAR(50) NOT NULL UNIQUE,
-    password_hash VARCHAR(255) NOT NULL, -- Contraseña cifrada (PHP password_hash)
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
--- 2. Tabla para registrar logs de intentos de acceso (Seguridad)
-CREATE TABLE IF NOT EXISTS logs_acceso (
-    id SERIAL PRIMARY KEY,
-    email_intentado VARCHAR(100) NOT NULL, -- Usaremos esta columna para guardar el 'username' intentado
-    fecha_intento TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    es_exitoso BOOLEAN NOT NULL,
-    direccion_ip VARCHAR(45),
-    detalles TEXT
-);
-
 -- Insertar datos de ejemplo
 INSERT INTO cursos (nombre, descripcion, duracion_horas) VALUES
     ('PHP Avanzado', 'Curso completo de PHP con patrones de diseño', 40),
@@ -46,10 +24,21 @@ INSERT INTO cursos (nombre, descripcion, duracion_horas) VALUES
     ('Docker for Developers', 'Containerización profesional de aplicaciones', 30)
 ON CONFLICT DO NOTHING;
 
+-- Tabla de usuarios para acceso interno
+CREATE TABLE IF NOT EXISTS users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 -- Usuario administrador INICIAL (contraseña: admin123)
-INSERT INTO users (username, password_hash) 
-    VALUES(
-        'admin',
-        '$2y$10$aOWNlaGS7w5v/Uz4JQ8vlez.LzzeHBvoal7dGRNfjwkyASKEf6LMK'  
-    )
-ON CONFLICT (username) DO NOTHING;
+INSERT INTO users (username, email, password_hash) 
+VALUES(
+    'admin',
+    'conchi.marcos@hotmail.es',
+    '$2y$10$tWNL3TwO7OUgdH.80SjdmuEARMOgQqrt/85/zvujXe63GuP1YbxNW'
+)
+ON CONFLICT (username) DO NOTHING; 
+-- La contraseña 'admin123' ha sido hasheada usando bcrypt
