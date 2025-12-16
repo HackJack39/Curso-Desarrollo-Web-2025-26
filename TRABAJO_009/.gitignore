@@ -1,0 +1,16 @@
+# Archivos de Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Archivos de entorno virtual
+venv/
+.venv/
+
+# Archivos de base de datos SQLite 
+*.db
+alumnos.db
+ventas.db
+informe_alumnos.csv
+informe_por_vendedor.csv
+informe_por_zona.csv 
