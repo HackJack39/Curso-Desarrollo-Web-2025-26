@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Alumnos - Flask</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+
+    <header>
+        <h1>Gestión de alumnos y cursos</h1>
+        <p>Aplicación web para consultar datos de alumnos, cursos y exportar informe</p>
+    </header>
+
+    <main>
+        <section class="feature">
+            <h2>Listar alumnos por curso</h2>
+            <form action="/alumnos" method="POST" class="form">
+                <label for="id_curso">Selecciona un curso:</label>
+                <select name="id_curso" id="id_curso">
+                    {% for curso in cursos %}
+                        <option value="{{ curso.id_curso }}">{{ curso.nombre_curso }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="btn">Listar alumnos</button>
+            </form>
+
+            {% if alumnos %}
+                <h3>Resultados:</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Curso</th>
+                            <th>Nombre</th>
+                            <th>Edad</th>
+                            <th>Nota</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for alumno in alumnos %}
+                        <tr>
+                            <td>{{ alumno.nombre_curso }}</td>
+                            <td>{{ alumno.nombre }}</td>
+                            <td>{{ alumno.edad }}</td>
+                            <td>{{ alumno.nota }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+        </section>
+
+        <section class="feature">
+            <h2>Estadísticas de notas</h2>
+            <a href="/estadisticas" class="btn">Mostrar estadísticas</a>
+
+            {% if stats %}
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Curso</th>
+                            <th>Nº Alumnos</th>
+                            <th>Nota Media</th>
+                            <th>Nota Máx.</th>
+                            <th>Nota Mín.</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for s in stats %}
+                        <tr>
+                            <td>{{ s.nombre_curso }}</td>
+                            <td>{{ s.cantidad_alumnos }}</td>
+                            <td>{{ s.nota_media }}</td>
+                            <td>{{ s.nota_maxima }}</td>
+                            <td>{{ s.nota_minima }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+        </section>
+
+        <section class="feature">
+            <h2>Buscar alumno</h2>
+            <form action="/buscar" method="POST" class="form">
+                <input type="text" name="nombre" placeholder="Escribe el nombre..." required>
+                <button type="submit" class="btn">Buscar</button>
+            </form>
+
+            {% with messages = get_flashed_messages() %}
+              {% if messages %}
+                {% for message in messages %}
+                  <p style="color: red;">{{ message }}</p>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+
+            {% if resultados %}
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Edad</th>
+                            <th>Curso</th>
+                            <th>Nota</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for r in resultados %}
+                        <tr>
+                            <td>{{ r.nombre }}</td>
+                            <td>{{ r.edad }}</td>
+                            <td>{{ r.nombre_curso }}</td>
+                            <td>{{ r.nota }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+        </section>
+
+        <section class="feature">
+            <h2>Exportar informe</h2>
+            <p>Genera un archivo CSV con toda la información.</p>
+            <a href="/exportar" class="btn btn-download">Descargar CSV</a>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2024 - Curso de Python y Flask</p>
+    </footer>
+
+</body>
+</html>
